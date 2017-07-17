@@ -25,9 +25,9 @@ laravel = Laravel(appKey, id => new Promise((resolve, reject) => {
 // setup middleware
 socketServer.use(session(laravel));
 
-// middleware adds .sesssion to socket object
+// middleware adds .sesssion to socket.request object
 socketServer.sockets.on("connect", socket => {
-    console.log(socket.session);
+    console.log(socket.request.session);
 });
 ```
 
