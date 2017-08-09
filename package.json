@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Zingle/socket.io-laravel/issues"
   },
-  "homepage": "https://github.com/Zingle/socket.io-laravel#readme"
+  "homepage": "https://github.com/Zingle/socket.io-laravel#readme",
+  "dependencies": {
+    "node-laravel": "^0.9.4"
+  }
 }
