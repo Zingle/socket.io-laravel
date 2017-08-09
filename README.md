@@ -1,29 +1,21 @@
 socket.io-laravel
 =================
-Socket.IO middleware for interoperation with Laravel.  This library makes use of
-the `node-laravel` package; it expects a Laravel context object from that
-module.
+Socket.IO middleware for interoperation with Laravel.
 
 Example
 -------
 ```js
 const http = require("http");
 const io = require("socket.io");
-const Laravel = require("node-laravel");
 const session = require("socket.io-laravel").session;
 const httpServer = http.createServer();
 const socketServer = io(httpServer);
 const appKey = "..."        // Laravel application encryption key
 
-var laravel;
-
-// create Laravel context that can load data from storage, decrypt, and decode
-laravel = Laravel(appKey, id => new Promise((resolve, reject) => {
-    // load session data from storage and resolve...
-}));
-
 // setup middleware
-socketServer.use(session(laravel));
+socketServer.use(session(appKey, id => new Promise((resolve, reject) => {
+    // load session data from storage and resolve
+})));
 
 // middleware adds .sesssion to socket.request object
 socketServer.sockets.on("connect", socket => {
@@ -34,6 +26,9 @@ socketServer.sockets.on("connect", socket => {
 API
 ---
 
-### session(Laravel) => function
-Create Socket.IO middleware using Laravel context compatible with those created
-by the `node-laravel` module.
+### session(key, [cookieName], fetch, [errorHandler]) => function
+Create Socket.IO middleware to load Laravel session data.  The key must match
+the Laravel `app.key`.  The fetch function takes a string session id and should
+return a Promise that resolves to the session data.  If an error handler is
+provided, a generic error will get send to the client; if no error handler is
+provided, the client will get the actual error.
