@@ -22,16 +22,15 @@ function makeSocket() {
 }
 
 describe("session(key, [cookieName], fetch, [errorHandler]) => function", () => {
-    var fetch, onerr, error,
-        middleware;
+    var fetch, middleware, onerr, err;
 
     beforeEach(() => {
         // PHP double serialized object representing {id:"42"}
         var id42 = 's:37:"O:8:"stdClass":1:{s:2:"id";s:2:"42";}";';
 
         fetch = id => Promise.resolve(id42);
-        onerr = err => error = err;
-        error = null;
+        onerr = e => err = e;
+        err = null;
         middleware = session(key, cookieName, fetch, onerr);
     })
 
