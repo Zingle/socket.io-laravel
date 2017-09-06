@@ -73,6 +73,22 @@ describe("session(key, [cookieName], fetch, [errorHandler]) => function", () => 
             done();
         });
     });
+
+    it("should call error handler with any issues", done => {
+        const socket = makeSocket();
+        const fetch = id => Promise.reject(new Error("oops"));
+        const middleware = session(key, fetch, onerr);
+
+        middleware(socket, e => {
+            expect(e).to.be.an(Error);
+            expect(e.message).to.not.be("oops");
+
+            expect(err).to.be.an(Error);
+            expect(err.message).to.be("oops");
+
+            done();
+        });
+    });
 });
 
 // generate an object that looks like a Socket.IO socket object
