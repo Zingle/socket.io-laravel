@@ -30,5 +30,5 @@ API
 Create Socket.IO middleware to load Laravel session data.  The key must match
 the Laravel `app.key`.  The fetch function takes a string session id and should
 return a Promise that resolves to the session data.  If an error handler is
-provided, a generic error will get send to the client; if no error handler is
-provided, the client will get the actual error.
+provided, errors will get passed to the error handler before being sent to the
+client.
