@@ -1,2 +1,3 @@
 const session = require("./lib/session");
-module.exports = {session};
+const SessionError = require("./lib/session-error");
+module.exports = {session, SessionError};
