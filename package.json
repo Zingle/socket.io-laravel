@@ -1,6 +1,6 @@
 {
   "name": "socket.io-laravel",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "description": "Socket.IO middleware for loading Laravel sessions",
   "main": "laravel.js",
   "scripts": {
@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/Zingle/socket.io-laravel#readme",
   "dependencies": {
-    "node-laravel": "^0.9.4"
+    "node-laravel": "^0.9.5"
   },
   "devDependencies": {
     "expect.js": "^0.3.1",
