@@ -7,17 +7,17 @@ Example
 ```js
 const http = require("http");
 const io = require("socket.io");
-const session = require("socket.io-laravel").session;
+const {session} = require("socket.io-laravel");
 const httpServer = http.createServer();
 const socketServer = io(httpServer);
 const appKey = "..."        // Laravel application encryption key
 
 // setup middleware
-socketServer.use(session(appKey, id => new Promise((resolve, reject) => {
+socketServer.use(session(appKey, async id => {
     // load session data from storage and resolve
 })));
 
-// middleware adds .sesssion to socket.request object
+// middleware adds .session to socket.request object
 socketServer.sockets.on("connect", socket => {
     console.log(socket.request.session);
 });

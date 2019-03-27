@@ -1,6 +1,6 @@
 {
   "name": "socket.io-laravel",
-  "version": "0.9.5",
+  "version": "0.10.0",
   "description": "Socket.IO middleware for loading Laravel sessions",
   "main": "laravel.js",
   "scripts": {

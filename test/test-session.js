@@ -30,7 +30,7 @@ describe("session(key, [cookieName], fetch, [errorHandler]) => function", () => 
         var id42 = 's:37:"O:8:"stdClass":1:{s:2:"id";s:2:"42";}";';
 
         fetch = id => Promise.resolve(id42);
-        middleware = session(key, cookieName, fetch);
+        middleware = session(key, cookieName, fetch, () => {});
     })
 
     it("should return socket middleware", () => {
