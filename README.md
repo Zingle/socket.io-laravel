@@ -26,9 +26,8 @@ socketServer.sockets.on("connect", socket => {
 API
 ---
 
-### session(key, [cookieName], fetch, [errorHandler]) => function
+### session(key, [cookieName], fetch, [console]) => function
 Create Socket.IO middleware to load Laravel session data.  The key must match
 the Laravel `app.key`.  The fetch function takes a string session id and should
-return a Promise that resolves to the session data.  If an error handler is
-provided, errors will get passed to the error handler before being sent to the
-client.
+return a Promise that resolves to the session data.  If a console object is
+provided, logs will be written to it.

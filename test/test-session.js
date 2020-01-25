@@ -1,7 +1,6 @@
 const expect = require("expect.js");
 const sinon = require("sinon");
 const session = require("../lib/session");
-const SessionError = require("../lib/session-error");
 
 const key = "12345678911234567892123456789312";
 const iv = "1234567891123456";
@@ -22,7 +21,7 @@ function makeSocket() {
     return {request: {cookies: {[cookieName]: cookie}}};
 }
 
-describe("session(key, [cookieName], fetch, [errorHandler]) => function", () => {
+describe("session(key, [cookieName], fetch, [Console]) => function", () => {
     var fetch, middleware;
 
     beforeEach(() => {
@@ -30,7 +29,7 @@ describe("session(key, [cookieName], fetch, [errorHandler]) => function", () => 
         var id42 = 's:37:"O:8:"stdClass":1:{s:2:"id";s:2:"42";}";';
 
         fetch = id => Promise.resolve(id42);
-        middleware = session(key, cookieName, fetch, () => {});
+        middleware = session(key, cookieName, fetch);
     })
 
     it("should return socket middleware", () => {
@@ -73,18 +72,18 @@ describe("session(key, [cookieName], fetch, [errorHandler]) => function", () => 
         });
     });
 
-    it("should call error handler with any issues", done => {
+    it("should write log to console", () => {
+        const debug = sinon.spy();
+        const info = sinon.spy();
+        const error = sinon.spy();
+        const console = {debug, info, error};
         const socket = makeSocket();
-        const fetch = id => Promise.reject(new Error("oops"));
-        const onerr = sinon.spy();
-        const middleware = session(key, fetch, onerr);
+        const middleware = session(key, fetch, console);
 
         middleware(socket, err => {
-            expect(err).to.be.a(SessionError);
-            expect(err.cause).to.be.an(Error);
-            expect(err.cause.message).to.be("oops");
-            expect(onerr.calledWith(err)).to.be(true);
-            done();
+            if (err) done(err);
+            expect(info.called).to.be(true);
+            expect(debug.called).to.be(true);
         });
     });
 });
